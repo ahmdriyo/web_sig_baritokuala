@@ -1,0 +1,10 @@
+.container-about{
+  background-color: bisque;
+  height: 93.9vh;
+  color: #000;
+}
+.show .container-about{
+  width: 80%;
+  transform: translateX(19%);
+  transition: transform 0.3s ease-in-out;
+}
