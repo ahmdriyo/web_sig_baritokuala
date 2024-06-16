@@ -1,81 +1,205 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
 .container-maps{
-  background-color: bisque;
-  height: 93.9vh;
-  color: #000;
+  background-image: url('/src/assets/squared-notebook-pages.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 92vh;
+  color: #241c1c;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-}
-.show .container-maps{
-  width: auto;
-  margin-left: 250px;
-  transition: transform 0.3s ease-in-out;
-}
-.side-detail {
-  padding: 30px;
-  width: 320px;
-  background-color: #555;
-  margin-top: 10vh;
+  transition: margin-left 0.3s ease-in-out; 
+  margin-left: 0;
 }
 
+.show .container-maps{
+  width: auto;
+  margin-left: 240px;
+  transition: margin-left 0.3s ease-in-out; 
+}
+.side-detail {
+  padding: 10px 30px;
+  width: 320px;
+  height: auto ;
+  margin-bottom: 30px;
+  background-color: #ffffff;
+  border: rgb(209, 209, 209) 2px solid;
+  border-radius: 20px;
+  margin-top: 10vh;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.side-detail-add{
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 2vh;
+  background-color: #ffffff;
+  height: 523px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.side-detail-edit{
+  padding: 28px 23px;
+  border-radius: 20px;
+  margin-top: 10vh;
+  background-color: #ffffff;
+  height: 523px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.side-detail-edit h4{
+  margin-top: -5px;
+  margin-left: 10px;
+}
+.side-detail:hover {
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Menguatkan bayangan saat hover */
+}
+.side-detail h4 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
 .card {
-  width: 260px;
+  width: 280px;
+  min-height: 55vh;
   padding: 20px;
   margin-top: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: rgba(146, 153, 148, 0.714) 2px outset;
+  border-radius: 8px;
+  background-color: #fff;
+  text-align: start;
+}
+.card h4 {
+  font-family: "Arial", sans-serif;
+  width: 280px;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: -22px;
+  }
+  
+  .card h4 p {
+  font-weight: 500;
+  font-style: light;
+  font-family: "Arial", sans-serif;
+  font-size: 15px;
+  max-width: 320px;
+  margin-top: 1px;
+  margin-left: 3px;
+}
+
+.content-btn {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+}
+.container-img{
+  display: flex;
+  justify-content: center;
+}
+.second-card{
+  width: 278px;
+  height: 90px;
+  padding: 20px;
+  margin-top: 20px;
+  border: rgba(146, 153, 148, 0.714) 2px dashed;
   border-radius: 8px;
   background-color: #fff;
   text-align: center;
+  
 }
-
+.second-card p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 18px;
+}
+.second-card label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+}
 .card p {
   margin: 10px 0;
 }
 
-.card p:first-child {
-  font-weight: bold;
-  font-size: 18px;
+.card p {
+  font-weight:600;
+  font-size: 15Px;
 }
 
-.card p:not(:first-child) {
-  color: #555;
-}
+
 .leaflet-container{
   height: 75vh;
   width: 90vh;
-  margin-top: 10vh;
 }
 .container-button{
   margin-top: 10px;
-  
 }
 .button-add{
   cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 14px;
-  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 12px;
   border-radius: 12px;
+  border-color: #8fd0f4;
   gap: 9px;
-  width: 70px;
+  width: 145px;
   height: 30px;
-  background-color: rgb(188, 181, 251);
 }
 
+.container-peta{
+  margin-top: 9vh;
+  border: rgba(146, 153, 148, 0.714) 3px outset;
+  border-radius: 5px;
 
-.card {
-  background: #fff;
-  border-radius: 10px;
+}
+.container-peta-add{
+  margin-top: 10vh;
+  border: rgba(146, 153, 148, 0.714) 3px outset;
+  border-radius: 5px;
+  margin-bottom: 60px;
+
+}
+.icon-plus{
+  margin-left: 2px;
+}
+
+.card-add {
+  width: 270px;
+  margin-top: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
   padding: 20px;
-  max-width: 400px;
   margin: 10px;
-
+  overflow-x: auto; 
+  max-height: 63vh;
 }
-
+.card-edit{
+  width: 270px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px;
+  margin-top: -10px;
+  overflow-x: auto; 
+  max-height: 63vh;
+}
 .card-title {
   font-size: 1.2rem;
+  margin-top: 1px;
   margin-bottom: 15px;
   color: #333;
 }
@@ -106,10 +230,35 @@
   font-size: 1rem;
 }
 
-
-
 .form-group input:focus,
 .form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.form-group-edit {
+  margin-bottom: 15px;
+  align-self: start;
+}
+
+.form-group-edit label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-group-edit input,
+.form-group-edit textarea {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+
+
+.form-group-edit input:focus,
+.form-group-edit textarea:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -125,6 +274,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-right: 5px;
 }
 
 .submit-button:hover {
@@ -132,6 +282,138 @@
 }
 
 .size-img {
-  width: 100px;
-  height: 100px;
+  max-width: 190px;
+  height: 120px;
+}
+
+.container-popup{
+  display: flex;
+  flex-direction: row;
+}
+
+.img-popup{
+  width: 40px;
+  height: 40px;
+}
+
+.text-popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 12px;
+
+  width: 100px; 
+  height: 50px;
+  box-sizing: border-box; 
+}
+
+.size-img-popup {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+.nama-popup{
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.alamat-popup{
+  font-weight: 400;
+}
+.button-popup{
+  background-color: #ffffff;
+  border-radius: 10px;
+  border-color: #c6d6e7;
+}
+
+.delete-button{
+  cursor: pointer;
+  margin-left: 5px;
+  transition: transform 0.5s ease;
+}
+
+.delete-button:hover{
+  transform: scale(1.2);
+}
+
+.edit-button{
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+
+.edit-button:hover {
+  transform: scale(1.14);
+}
+
+.goBack{
+  display: flex;
+  cursor: pointer;
+  flex-direction: row;
+  margin-top: 25px;
+}
+
+.goBack h3{
+  margin-top: 3px;
+  margin-left: 5px;
+}
+
+
+@media (max-width: 1300px) {
+  .leaflet-container{
+    height: 65vh;
+    width: 70vh;
+  }
+  .side-detail {
+    padding: 10px 30px;
+    width: 250px;
+    height: 500px ;
+    margin-bottom: 30px;
+    border: rgb(209, 209, 209) 2px solid;
+    border-radius: 20px;
+    margin-top: 9vh;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card {
+    width: 205px;
+    padding: 20px;
+    margin-top: 17px;
+    border: rgba(146, 153, 148, 0.714) 2px outset;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: start;
+  }
+  .second-card{
+    width: 210px;
+    height: 90px;
+    padding: 20px;
+    margin-top: 20px;
+    border: rgba(146, 153, 148, 0.714) 2px dashed;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: center;
+    
+  }
+  .card h4 p {
+    font-weight: 500;
+    font-style: light;
+    font-family: "Arial", sans-serif;
+    font-size: 15px;
+    max-width: 144px;
+    margin-top: 1px;
+    margin-left: 3px;
+  }
+  .second-card p {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 15px;
+  }
+
+}
+@media (max-width: 1000px) {
+
+}
+@media (max-width: 700px) {
+
 }

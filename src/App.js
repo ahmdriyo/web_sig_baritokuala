@@ -1,119 +1,78 @@
-import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  useLocation,
-} from "react-router-dom";
-import { TiThMenu } from "react-icons/ti";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
-import { FaHome } from "react-icons/fa";
-import { IoMapSharp, IoInformationCircle } from "react-icons/io5";
-import { IoIosPerson } from "react-icons/io";
+
 import Home from "./pages/Home/index";
 import Maps from "./pages/Maps/index";
 import Kepala from "./pages/Kepala/index";
 import About from "./pages/About/index";
 import AddMarker from "./pages/Maps/add_marker";
+import EditMarker from "./pages/Maps/edit_marker";
+import EditKepala from "./pages/Kepala/edit_kepala";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
+import Register from "./components/Register";
+import { AuthProvider } from "./auth/AuthContext";
+import PrivateRoute from "./Routes/PrivateRoute";
+import RoleRoute from "./Routes/RoleRoute";
+import AddKepala from "./pages/Kepala/add_kepala";
 
 function App() {
   const [show, setShow] = useState(true);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 700) {
+        setShow(false);
+      } else {
+        setShow(true);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
-    <div className="container">
-      <Router>
-        <div className={`App ${show ? "show" : ""}`}>
-        <nav className="navbar">
-          {/* HamburgerMenu */}
-            <div
-              className="navbar-toggler"
-              onClick={show ? handleClose : handleShow}
-            >
-              <TiThMenu />
-            </div>
-            <PageTitle />
-            <div className="navbar-brand">Login</div>
-          </nav>
-          {/* Akhir HamburgerMenu  */}
-          {/* Router */}
+    <AuthProvider>
+      <div className="container">
+        <Router>
+          <Navbar
+            show={show}
+            handleShow={handleShow}
+            handleClose={handleClose}
+          />
           <div className="container">
             <Routes>
-              <Route path="/" element={<Home to="/home" />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/maps" element={<Maps />} />
-              <Route path="/kepala" element={<Kepala />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/maps/add_marker" element={<AddMarker />} />
+              <Route path="/login" element={<Login show={show} />} />
+              <Route path="/register" element={<Register show={show} />} />
+
+              <Route element={<PrivateRoute />}>
+                <Route path="/home" element={<Home show={show} />} />
+                <Route path="/maps" element={<Maps show={show} />} />
+                <Route path="/maps/add_marker" element={<AddMarker  show={show}/>} />
+                <Route path="/maps/edit_marker/:id" element={<EditMarker  show={show}/>} />
+              </Route>
+
+              <Route element={<RoleRoute allowedRoles={["admin", "kepala"]} />}>
+                <Route path="/kepala" element={<Kepala show={show} />} />
+              </Route>
+
+              <Route element={<RoleRoute allowedRoles={["admin"]} />}>
+                <Route path="/kepala/edit_kepala" element={ <EditKepala show={show} />}/>
+                <Route path="/kepala/add_kepala" element={ <AddKepala show={show} />}/>
+                {/* <Route path="/admin" element={<AdminDashboard />} /> */}
+              </Route>
+
+              <Route path="/about" element={<About show={show}/>} />
+              {/* <Route path="/" element={<Navigate to="/home" />} /> */}
             </Routes>
           </div>
-          {/* Akhir Router */}
-          {/* Sidebar */}
-          <div className={`offcanvas ${show ? "show" : ""}`}>
-            <div className="offcanvas-header">
-              <div className="offcanvas-title">
-                <p>Menu</p>
-              </div>
-            </div>
-            <div className="offcanvas-body">
-              <Link className="nav-link" to="/home">
-                <div className="icon-menu">
-                  <FaHome />
-                </div>
-                Home
-              </Link>
-              <Link className="nav-link" to="/maps">
-                <div className="icon-menu">
-                  <IoMapSharp />
-                </div>
-                Maps
-              </Link>
-              <Link className="nav-link" to="/kepala">
-                <div className="icon-menu">
-                  <IoIosPerson />
-                </div>
-                Kepala
-              </Link>
-              <Link className="nav-link" to="/about">
-                <div className="icon-menu">
-                  <IoInformationCircle />
-                </div>
-                About
-              </Link>
-            </div>
-            {/* Akhir Sidebar */}
-          </div>
-        </div>
-      </Router>
-    </div>
+        </Router>
+      </div>
+    </AuthProvider>
   );
 }
-
-function PageTitle() {
-  const location = useLocation();
-  let title = "";
-
-  switch (location.pathname) {
-    case "/home":
-      title = "Home";
-      break;
-    case "/maps":
-      title = "Maps";
-      break;
-    case "/kepala":
-      title = "Kepala";
-      break;
-    case "/about":
-      title = "About";
-      break;
-    default:
-      title = "Home";
-  }
-
-  return <div className="navbar-brand">{title}</div>;
-}
-
 export default App;

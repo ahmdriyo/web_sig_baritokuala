@@ -4,7 +4,8 @@
   color: #000;
 }
 .show .container-home{
-  width: 80%;
-  transform: translateX(19%);
+  width: auto;
+  margin-left: 250px;
   transition: transform 0.3s ease-in-out;
 }
+

@@ -1,0 +1,104 @@
+.container-register{
+  display: flex;
+  justify-content: center;
+  background-image: url('/src/assets/bg-login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  height: 92.2vh;
+  transition: margin-left 0.3s ease-in-out; 
+}
+.show .container-register{
+  width: auto;
+  margin-left: 240px;
+  transition: margin-left 0.3s ease-in-out; 
+}
+
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.register-title {
+  margin-top: -10px;
+  margin-bottom:50px;
+  color: #000000;
+}
+.register-title {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 25px;
+
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.input-container svg {
+  margin-right: 10px;
+}
+
+.register-input {
+  border: none;
+  outline: none;
+  padding: 10px;
+  margin-left: 10px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.register-button {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.register-button:hover {
+  background: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+
+.toggle-password {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  margin-left: -30px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password svg {
+  color: #333;
+  font-size: 18px;
+}
+
+.toggle-password:hover svg {
+  color: #007bff;
+}
