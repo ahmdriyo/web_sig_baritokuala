@@ -2,71 +2,86 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./StyleKepala.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { auth, firestore } from "../../firebase";
-import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
-const EditKepala = ({show}) => {
+import axios from "axios";
+
+const EditKepala = ({ show }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [telp, setTelp] = useState("");
   const [alamat, setAlamat] = useState("");
   const [password, setPassword] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
   const [error, setError] = useState("");
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const docRef = doc(firestore, "users", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          console.log("Data :",data)
-          setName(data.name);
-          setEmail(data.email);
-          setTelp(data.telp);
-          setAlamat(data.alamat);
-          setCurrentPassword(data.password); 
-        } else {
-          console.log("No such document!");
+        const dataRef = collection(firestore, "users");
+        const q = query(dataRef, where("role", "==", "kepala"));
+        const querySnapshot = await getDocs(q);
+        const dataObject = querySnapshot.docs.reduce((acc, doc) => {
+          acc[doc.id] = doc.data();
+          return acc;
+        }, {});
+        console.log("Data:", dataObject);
+        const dataKepala = querySnapshot.docs[0]?.data();
+        if (dataKepala) {
+          setFullName(dataKepala.fullName);
+          setEmail(dataKepala.email);
+          setTelp(dataKepala.telp);
+          setAlamat(dataKepala.alamat);
+          setPassword(dataKepala.password);
         }
       } catch (error) {
         console.error("Error fetching document:", error);
       }
     };
-
     fetchData();
   }, [id]);
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    console.log("Attempting to update document with id:", id);
     try {
-      if (email.trim() === "" || password.trim() === "") {
-        setError("Email and password are required.");
-        return;
-      }
-      const user = auth.currentUser;
-      if (user) {
-        const credential = EmailAuthProvider.credential(user.email, currentPassword);
-        await reauthenticateWithCredential(user, credential);
-        await updatePassword(user, password);
-      }
       const docRef = doc(firestore, "users", id);
       await updateDoc(docRef, {
-        name,
+        fullName,
         email,
         telp,
         alamat,
-        password,
       });
-
       alert("Data updated successfully");
       navigate("/kepala");
     } catch (error) {
       setError(error.message);
       console.error("Error updating document:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    console.log("Attempting to delete user with id:", id);
+    try {
+      const docRef = doc(firestore, "users", id);
+      await deleteDoc(docRef);
+      const response = await axios.delete("http://localhost:5000/deleteKepala", {
+        data: { uid: id },
+      });
+      alert(response.data.message);
+      navigate("/kepala");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      setError(error.response ? error.response.data.message : error.message);
     }
   };
   const handeleBack = () => {
@@ -96,8 +111,8 @@ const EditKepala = ({show}) => {
                 <input
                   type="text"
                   name="nama"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                 />
               </div>
             </div>
@@ -147,8 +162,15 @@ const EditKepala = ({show}) => {
             </div>
           </div>
           <div>
-            <button onClick={handleUpdate} className="submit-button">
+            <button
+              type="submit"
+              onClick={handleUpdate}
+              className="submit-button"
+            >
               Save
+            </button>
+            <button onClick={() => handleDelete()} className="submit-button">
+              Delete
             </button>
           </div>
         </div>

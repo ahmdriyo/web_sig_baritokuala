@@ -1,0 +1,12 @@
+.report-container {
+  margin-top: 20px;
+}
+
+#report-content {
+  display: none;
+}
+
+.report-item {
+  margin-bottom: 20px;
+}
+

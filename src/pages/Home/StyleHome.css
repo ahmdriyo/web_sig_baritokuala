@@ -1,11 +1,105 @@
-.container-home{
-  background-color: bisque;
-  height: 93.9vh;
-  color: #000;
+@import url('https://fonts.googleapis.com/css2?family=Poly:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poly:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Poly:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
-.show .container-home{
-  width: auto;
-  margin-left: 250px;
-  transition: transform 0.3s ease-in-out;
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(40%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.container-home{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 50px;
+  background-color: #ffffff;
+  background-image: url('/src/assets/textured-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 92.2vh;
+  color: #000;
+  transition: margin-left 0.3s ease-in-out; 
 }
 
+.show .container-home{
+  width: auto;
+  margin-left: 240px;
+  transition: margin-left 0.3s ease-in-out; 
+}
+.content-img-home {
+  width: 500px;
+  height: 500px;
+  animation: slideInFromBottom 0.6s ease-out forwards;
+}
+.btn-mulai{
+  cursor: pointer;
+  width: 200px;
+  height: 40px;
+  background-color: #000;
+  color: #ffffff;
+  border-radius: 10px;
+  text-align: center;
+  align-content: center;
+  animation: slideInFromRight 1s ease-out forwards;
+}
+.content-text-home{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -100px;
+  width: 600px;
+  animation: slideInFromBottom 0.6s ease-out forwards;
+  
+}
+
+.content-text-home h3{
+  font-family: "Poly", serif;
+  font-weight: bold;
+  font-size: 27px;
+  font-style: normal;
+}
+
+.content-text-home p{
+  margin-top: -20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.content-text-home h4{
+  font-family: "Courgette", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.icon-lembaga{
+  position: absolute;
+  bottom: 0px;
+  right: 30px;
+  animation: slideInFromLeft 0.6s ease-out forwards;
+}

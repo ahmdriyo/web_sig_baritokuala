@@ -1,4 +1,13 @@
-
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
@@ -24,14 +33,14 @@
 .side-detail {
   padding: 10px 30px;
   width: 320px;
-  height: auto ;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   background-color: #ffffff;
   border: rgb(209, 209, 209) 2px solid;
   border-radius: 20px;
   margin-top: 10vh;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideInFromBottom 0.6s ease-out forwards;
 }
 .side-detail-add{
   padding: 20px;
@@ -66,7 +75,7 @@
 }
 .card {
   width: 280px;
-  min-height: 55vh;
+  height: auto;
   padding: 20px;
   margin-top: 20px;
   border: rgba(146, 153, 148, 0.714) 2px outset;
@@ -142,8 +151,14 @@
   width: 90vh;
 }
 .container-button{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
   margin-top: 10px;
+  animation: slideInFromBottom 0.6s ease-out forwards;
 }
+
+
 .button-add{
   cursor: pointer;
   display: flex;
@@ -156,7 +171,22 @@
   border-radius: 12px;
   border-color: #8fd0f4;
   gap: 9px;
-  width: 145px;
+  width: auto;
+  height: 30px;
+}
+.button-report{
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 12px;
+  border-radius: 12px;
+  border-color: #8fd0f4;
+  gap: 9px;
+  width: auto;
   height: 30px;
 }
 
@@ -164,6 +194,7 @@
   margin-top: 9vh;
   border: rgba(146, 153, 148, 0.714) 3px outset;
   border-radius: 5px;
+  animation: slideInFromBottom 0.6s ease-out forwards;
 
 }
 .container-peta-add{
@@ -325,6 +356,7 @@
   border-radius: 10px;
   border-color: #c6d6e7;
 }
+
 
 .delete-button{
   cursor: pointer;

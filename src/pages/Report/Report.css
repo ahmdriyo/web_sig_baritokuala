@@ -1,0 +1,29 @@
+@media print {
+  .container-maps{
+    height:100vh;
+  }
+  .side-detail {
+    width: 25%;
+    height: 77%;
+    float: left;
+  }
+  .card{
+    width: 85%;
+  }
+  #print-tooltip{
+    display: none;
+  }
+}
+
+.button-print{
+  cursor: pointer;
+  background-color: rgba(0, 0, 255, 0);
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid white;
+}
+
+#print-tooltip{
+  z-index: 999;
+}

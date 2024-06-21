@@ -1,37 +1,65 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./StyleKepala.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import {  doc, setDoc } from "firebase/firestore";
-import { auth, firestore } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-const AddKepala = ({show}) => {
+import { doc, setDoc } from "firebase/firestore";
+import { auth, firestore, storage } from "../../firebase";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+const AddKepala = ({ show }) => {
   const navigate = useNavigate();
-  const [name, setName] = useState("")
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [telp, setTelp] = useState("");
   const [alamat, setAlamat] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
   const [error, setError] = useState("");
-  const handleAdd = async () => {
+
+
+
+  const handleImageChange = async (e) => {
+    const img = ref(storage, `Imgs/${v4()}`);
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const data = await uploadBytes(img, file);
+        // console.log("Data:", data);
+        const dataImg = await getDownloadURL(data.ref);
+        setImageUrl((prevData) => ({ ...prevData, dataImg }));
+      } catch (error) {
+        console.error("Error mengunggah gambar:", error);
+      }
+    }
+  };
+
+  const handleAdd = async (e) => {
+    e.preventDefault();
     try {
       if (email.trim() === "" || password.trim() === "") {
         setError("Email and password are required.");
         return;
       }
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(firestore, "users", userCredential?.user?.uid),{
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await setDoc(doc(firestore, "users", userCredential?.user?.uid), {
         email,
         password,
-        name,
+        fullName,
         alamat,
         telp,
-        userId : userCredential?.user?.uid,
-        role: "kepala"
+        imageUrl,
+        userId: userCredential?.user?.uid,
+        role: "kepala",
       });
-      alert("Pendaftaran Berhasil Silahkan");
-      navigate("/kepala")
+      await signOut(auth);
+      navigate('/login')
+      alert("Pendaftaran Berhasil Silahkan Login Kepala");
+
     } catch (error) {
       setError(error.message);
       console.error("Error registering user:", error);
@@ -62,8 +90,8 @@ const AddKepala = ({show}) => {
                   type="text"
                   name="nama"
                   placeholder="Masukan Nama"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                 />
               </div>
             </div>
@@ -112,6 +140,18 @@ const AddKepala = ({show}) => {
                   placeholder="Masukan Alamat"
                   value={alamat}
                   onChange={(e) => setAlamat(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="content-text">
+              <label htmlFor="gambar">Gambar</label>
+              <div className="text-border">
+                <input
+                  type="file"
+                  id="gambar"
+                  name="gambar"
+                  style={{ paddingTop: 15 }}
+                  onChange={handleImageChange}
                 />
               </div>
             </div>
