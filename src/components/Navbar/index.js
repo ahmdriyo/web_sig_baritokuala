@@ -12,7 +12,7 @@ import { TbLogout } from "react-icons/tb";
 import { signOut } from "firebase/auth";
 const Navbar = ({ show, handleShow, handleClose }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUser, role } = useAuth();
+  const { currentUser, peran } = useAuth();
   const [dataUser, setDataUser] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,11 +21,10 @@ const Navbar = ({ show, handleShow, handleClose }) => {
     const fetchUserRole = async () => {
       if (currentUser) {
         try {
-          const userDoc = await getDoc(doc(firestore, "users", currentUser.uid));
+          const userDoc = await getDoc(doc(firestore, "pengguna", currentUser.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            setDataUser(userData.fullName);
-            console.log(userData)
+            setDataUser(userData.nama_panjang);
             
           } else {
             console.log("Someone not found.");
@@ -39,7 +38,7 @@ const Navbar = ({ show, handleShow, handleClose }) => {
   }, [currentUser]);
   switch (location.pathname) {
     case "/home":
-      title = "Home";
+      title = "Beranda";
       break;
     case "/maps":
       title = "Maps";
@@ -57,10 +56,16 @@ const Navbar = ({ show, handleShow, handleClose }) => {
       title = "Profile";
       break;
     case "/about":
-      title = "About";
+      title = "Tentang";
+      break;
+    case "/maps/edit_marker/cHLfv4N2nMrUHAERxOoB" :
+      title = "Edit Marker";
       break;
     case "/report":
       title = "Report";
+      break;
+    case "/maps/add_marker":
+      title = "Tambah Marker";
       break;
     default:
       title = "";
@@ -110,7 +115,7 @@ const Navbar = ({ show, handleShow, handleClose }) => {
       </nav>
       {/* Akhir HamburgerMenu */}
       {/* Sidebar */}
-      <div className={`offcanvas ${show ? "show" : ""}`}>
+      <div className={`sidebar offcanvas ${show ? "show" : ""}`}>
         <div className="offcanvas-header">
           <div className="offcanvas-title">
             <p>Menu</p>
@@ -129,14 +134,14 @@ const Navbar = ({ show, handleShow, handleClose }) => {
             </div>
             Maps
           </Link>
-          {(role === "kepala") | (role === "admin") ? (
+          {(peran === "kepala") | (peran === "admin") ? (
             <Link className="nav-link" to="/kepala">
               <div className="icon-menu">
                 <IoIosPerson />
               </div>
               Kepala
             </Link>
-          ) : role === "pengunjung" ? (
+          ) : peran === "pengunjung" ? (
             <Link className="nav-link" to="/profile">
               <div className="icon-menu">
                 <IoIosPerson />

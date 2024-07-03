@@ -9,7 +9,7 @@ const Kepala = ({ show }) => {
   const navigate = useNavigate();
   const [dataKepala, setDataKepala] = useState("");
   const [loading, setLoading] = useState(true);
-  const { role } = useAuth();
+  const { peran } = useAuth();
   const handleEdit = (id) => {
     navigate(`/kepala/edit_kepala/${id}`);
   };
@@ -18,8 +18,8 @@ const Kepala = ({ show }) => {
   };
   const fetchData = async () => {
     try {
-      const dataRef = collection(firestore, "users");
-      const q = query(dataRef, where("role", "==", "kepala"));
+      const dataRef = collection(firestore, "pengguna");
+      const q = query(dataRef, where("peran", "==", "kepala"));
       const querySnapshot = await getDocs(q);
       const dataList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -57,7 +57,7 @@ const Kepala = ({ show }) => {
                     <img
                       className="size-img-kepala"
                       alt="uniska"
-                      src={item?.imageUrl?.dataImg}
+                      src={item?.link_gambar}
                     ></img>
                   </div>
                 </div>
@@ -65,7 +65,7 @@ const Kepala = ({ show }) => {
                   <div className="content-text">
                     <label>Nama</label>
                     <div className="text-area-email">
-                      <h5>{item.fullName}</h5>
+                      <h5>{item.nama_panjang}</h5>
                     </div>
                   </div>
                   <div className="content-text">
@@ -77,7 +77,7 @@ const Kepala = ({ show }) => {
                   <div className="content-text">
                     <label>Password</label>
                     <div className="text-area-email">
-                      <h5>{item.password}</h5>
+                      <h5>{item.kata_sandi}</h5>
                     </div>
                   </div>
                   <div className="content-text">
@@ -93,7 +93,7 @@ const Kepala = ({ show }) => {
                     </div>
                   </div>
                 </div>
-                {role === "admin" ? (
+                {peran === "admin" ? (
                   <div>
                     <button
                       onClick={() => handleEdit(item.id)}

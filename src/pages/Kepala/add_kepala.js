@@ -9,25 +9,32 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 const AddKepala = ({ show }) => {
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("");
+  const [nama_panjang, setNama_panjang] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [kata_sandi, setKata_sandi] = useState("");
   const [telp, setTelp] = useState("");
   const [alamat, setAlamat] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
   const [error, setError] = useState("");
-
-
-
+  
+  
+  
+  const [link_gambar, setLink_gambar] = useState(null);
+  
   const handleImageChange = async (e) => {
     const img = ref(storage, `Imgs/${v4()}`);
+    console.log("img:", img);
+
     const file = e.target.files[0];
+    console.log("file:", file);
+
     if (file) {
       try {
         const data = await uploadBytes(img, file);
-        // console.log("Data:", data);
+        console.log("Data:", data.ref);
         const dataImg = await getDownloadURL(data.ref);
-        setImageUrl((prevData) => ({ ...prevData, dataImg }));
+        setLink_gambar(dataImg);
+        console.log("data link ", dataImg)
+
       } catch (error) {
         console.error("Error mengunggah gambar:", error);
       }
@@ -37,24 +44,24 @@ const AddKepala = ({ show }) => {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      if (email.trim() === "" || password.trim() === "") {
-        setError("Email and password are required.");
+      if (email.trim() === "" || kata_sandi.trim() === "") {
+        setError("Email and kata sandi are required.");
         return;
       }
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        kata_sandi
       );
-      await setDoc(doc(firestore, "users", userCredential?.user?.uid), {
+      await setDoc(doc(firestore, "pengguna", userCredential?.user?.uid), {
         email,
-        password,
-        fullName,
+        kata_sandi,
+        nama_panjang,
         alamat,
         telp,
-        imageUrl,
-        userId: userCredential?.user?.uid,
-        role: "kepala",
+        link_gambar,
+        id_kepala: userCredential?.user?.uid,
+        peran: "kepala",
       });
       await signOut(auth);
       navigate('/login')
@@ -90,8 +97,8 @@ const AddKepala = ({ show }) => {
                   type="text"
                   name="nama"
                   placeholder="Masukan Nama"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={nama_panjang}
+                  onChange={(e) => setNama_panjang(e.target.value)}
                 />
               </div>
             </div>
@@ -114,8 +121,8 @@ const AddKepala = ({ show }) => {
                   type="password"
                   name="password"
                   placeholder="Masukan Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={kata_sandi}
+                  onChange={(e) => setKata_sandi(e.target.value)}
                 />
               </div>
             </div>

@@ -21,8 +21,7 @@ const Login = ({ show }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      
-      const userDoc = await getDoc(doc(firestore, "users", user.uid));
+      const userDoc = await getDoc(doc(firestore, "pengguna", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
         const userRole = userData.role;

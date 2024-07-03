@@ -17,7 +17,7 @@ const EditMarker = ({show}) => {
     berdiri : "",
     deskripsi : "",
     koordinat : null,
-    imageUrl : "",
+    link_gambar : "",
   });
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const EditMarker = ({show}) => {
         const { lat, lng } = e.latlng;
         setEditData((prevData) => ({
           ...prevData,
-          koordinat: [lat, lng],
+          koordinat: [lat , lng]
         }));
       },
     });
@@ -58,7 +58,7 @@ const EditMarker = ({show}) => {
         const imageRef = ref(storage, `images/${newImage.name}`);
         await uploadBytes(imageRef, newImage);
         const imgUrl = await getDownloadURL(imageRef);
-        updatedData.imageUrl = imgUrl;
+        updatedData.link_gambar = imgUrl;
       }
 
       const markerRef = doc(firestore, "dataKampus", id);
@@ -167,7 +167,7 @@ const EditMarker = ({show}) => {
                 type="text"
                 value={editData.koordinat}
                 onChange={(e) =>
-                  setEditData({ ...editData, koordinat: e.target.value })
+                  setEditData({ ...editData, koordinatLat: e.target.value })
                 }
               />
             </div>

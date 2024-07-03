@@ -14,7 +14,24 @@
     display: none;
   }
 }
-
+.container-maps-report{
+  background-image: url('/src/assets/squared-notebook-pages.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  color: #241c1c;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  transition: margin-left 0.3s ease-in-out; 
+  margin-left: 0;
+}
+.show .container-maps-report{
+  width: auto;
+  margin-left: 240px;
+  transition: margin-left 0.3s ease-in-out; 
+}
 .button-print{
   cursor: pointer;
   background-color: rgba(0, 0, 255, 0);
@@ -26,4 +43,8 @@
 
 #print-tooltip{
   z-index: 999;
+}
+.pengesahan{
+  position: absolute;
+  right: 90px;
 }

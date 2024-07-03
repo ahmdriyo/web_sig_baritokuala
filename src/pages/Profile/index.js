@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./StyleProfile.css";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 const Profile = ({ show }) => {
-  const { currentUser, role } = useAuth();
+  const { currentUser } = useAuth();
   const [dataUser, setDataUser] = useState("");
-  const navigate = useNavigate();
   useEffect(() => {
     const fetchUserRole = async () => {
       if (currentUser) {
         try {
           const userDoc = await getDoc(
-            doc(firestore, "users", currentUser.uid)
+            doc(firestore, "pengguna", currentUser.uid)
           );
           if (userDoc.exists()) {
             const userData = userDoc.data();
             setDataUser(userData);
-            console.log(userData)
+            console.log("pengguna",userData)
           } else {
             console.log("Someone not found.");
           }
@@ -36,7 +34,7 @@ const Profile = ({ show }) => {
           <div className="content-text">
             <label>Nama</label>
             <div className="text-area-email">
-              <h5>{dataUser.fullName}</h5>
+              <h5>{dataUser.nama_panjang}</h5>
             </div>
           </div>
           <div className="content-text">

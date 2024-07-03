@@ -8,7 +8,7 @@ import { auth, firestore } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 const Register = ({ show }) => {
-  const [fullName, setFullName] = useState("")
+  const [nama_panjang, setNama_panjang] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,13 +22,13 @@ const Register = ({ show }) => {
         return;
       }
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(firestore, "users", userCredential?.user?.uid),{
+      await setDoc(doc(firestore, "pengguna", userCredential?.user?.uid),{
         email,
-        fullName,
-        userId : userCredential?.user?.uid,
-        role: "pengunjung"
+        nama_panjang,
+        id_pengunjung : userCredential?.user?.uid,
+        peran: "pengunjung"
       });
-      setFullName("");
+      setNama_panjang("");
       setEmail("");
       setPassword("");
       setError("");
@@ -55,8 +55,8 @@ const Register = ({ show }) => {
               type="text"
               className="register-input"
               placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              value={nama_panjang}
+              onChange={(e) => setNama_panjang(e.target.value)}
               required
             />
           </div>

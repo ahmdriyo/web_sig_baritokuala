@@ -9,20 +9,21 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [role, setRole] = useState(null);
+  const [peran, setPeran] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setCurrentUser(user);
-        const userDoc = await getDoc(doc(firestore, "users", user.uid));
+        const userDoc = await getDoc(doc(firestore, "pengguna", user.uid));
         if (userDoc.exists()) {
-          setRole(userDoc.data().role);
+          setPeran(userDoc.data().peran);
         }
+        console.log(peran)
       } else {
         setCurrentUser(null);
-        setRole(null);
+        setPeran(null);
       }
       setLoading(false);
     });
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, role }}>
+    <AuthContext.Provider value={{ currentUser, peran }}>
       {!loading && children}
     </AuthContext.Provider>
   );

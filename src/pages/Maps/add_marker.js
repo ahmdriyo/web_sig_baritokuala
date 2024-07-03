@@ -19,7 +19,7 @@ const AddMarker = ({show}) => {
     berdiri : "",
     deskripsi : "",
     koordinat : null,
-    imageUrl : "",
+    link_gambar : "",
   });
   const navigate = useNavigate();
   const MapClickHandler = () => {
@@ -28,7 +28,7 @@ const AddMarker = ({show}) => {
         const { lat, lng } = e.latlng;
         setAddData((prevData) => ({
           ...prevData,
-          koordinat: [lat,lng],
+          koordinat: [lat, lng]
         }))
       },
     });
@@ -43,7 +43,7 @@ const AddMarker = ({show}) => {
         const data = await uploadBytes(img, file);
         console.log("Data:", data);
         const dataImg = await getDownloadURL(data.ref);
-        setAddData((prevData) => ({ ...prevData, imageUrl: dataImg }));
+        setAddData((prevData) => ({ ...prevData, link_gambar: dataImg }));
       } catch (error) {
         console.error("Error mengunggah gambar:", error);
       }
@@ -174,7 +174,7 @@ const AddMarker = ({show}) => {
                   />
               </div>
               <div className="form-group">
-                <label className="label-input">Koordinat</label>
+                <label className="label-input">Koordinat </label>
                 <input
                   type="text"
                   id="koordinat"
@@ -182,10 +182,11 @@ const AddMarker = ({show}) => {
                   placeholder="Pilih di Maps"
                   value={addData.koordinat}
                   onChange={(e) =>
-                    setAddData({ ...addData, koordinat: e.target.value })
+                    setAddData({ ...addData, koordinatLat: e.target.value })
                   }
                   />
               </div>
+              
               <div className="form-group" style={{ width: 215 }}>
                 <label htmlFor="gambar" className="label-input">
                   Gambar

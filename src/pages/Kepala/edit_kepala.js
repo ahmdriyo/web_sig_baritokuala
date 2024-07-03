@@ -11,24 +11,24 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { auth, firestore } from "../../firebase";
+import {firestore } from "../../firebase";
 import axios from "axios";
 
 const EditKepala = ({ show }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("");
+  const [nama_panjang, setNama_panjang] = useState("");
   const [email, setEmail] = useState("");
+  const [kata_sandi, setKata_sandi] = useState("");
   const [telp, setTelp] = useState("");
   const [alamat, setAlamat] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dataRef = collection(firestore, "users");
-        const q = query(dataRef, where("role", "==", "kepala"));
+        const dataRef = collection(firestore, "pengguna");
+        const q = query(dataRef, where("peran", "==", "kepala"));
         const querySnapshot = await getDocs(q);
         const dataObject = querySnapshot.docs.reduce((acc, doc) => {
           acc[doc.id] = doc.data();
@@ -37,11 +37,11 @@ const EditKepala = ({ show }) => {
         console.log("Data:", dataObject);
         const dataKepala = querySnapshot.docs[0]?.data();
         if (dataKepala) {
-          setFullName(dataKepala.fullName);
+          setNama_panjang(dataKepala.nama_panjang);
           setEmail(dataKepala.email);
           setTelp(dataKepala.telp);
           setAlamat(dataKepala.alamat);
-          setPassword(dataKepala.password);
+          setKata_sandi(dataKepala.kata_sandi);
         }
       } catch (error) {
         console.error("Error fetching document:", error);
@@ -54,9 +54,9 @@ const EditKepala = ({ show }) => {
     e.preventDefault();
     console.log("Attempting to update document with id:", id);
     try {
-      const docRef = doc(firestore, "users", id);
+      const docRef = doc(firestore, "pengguna", id);
       await updateDoc(docRef, {
-        fullName,
+        nama_panjang,
         email,
         telp,
         alamat,
@@ -72,7 +72,7 @@ const EditKepala = ({ show }) => {
   const handleDelete = async () => {
     console.log("Attempting to delete user with id:", id);
     try {
-      const docRef = doc(firestore, "users", id);
+      const docRef = doc(firestore, "pengguna", id);
       await deleteDoc(docRef);
       const response = await axios.delete("http://localhost:5000/deleteKepala", {
         data: { uid: id },
@@ -111,8 +111,8 @@ const EditKepala = ({ show }) => {
                 <input
                   type="text"
                   name="nama"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={nama_panjang}
+                  onChange={(e) => setNama_panjang(e.target.value)}
                 />
               </div>
             </div>
@@ -133,8 +133,8 @@ const EditKepala = ({ show }) => {
                 <input
                   type="password"
                   name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={kata_sandi}
+                  onChange={(e) => setKata_sandi(e.target.value)}
                 />
               </div>
             </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, where, query } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import ReactToPrint from "react-to-print";
 import { FaPrint } from "react-icons/fa";
@@ -11,10 +11,29 @@ import { Tooltip } from "react-tooltip";
 const Report = ({ show }) => {
   const [dataKampus, setDataKampus] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
-
+  const [daaKepala, setDataKepala] = useState('');
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    fetchDataKepala();
+  }, []);
+
+  const fetchDataKepala = async () => {
+    try {
+      const dataRef = collection(firestore, "pengguna");
+      const q = query(dataRef, where("peran", "==", "kepala"));
+      const querySnapshot = await getDocs(q);
+      const dataList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setDataKepala(dataList);
+      console.log("datalist kkk", dataList);
+    } catch (error) {
+      console.error("Error mengambil data:", error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -50,7 +69,7 @@ const Report = ({ show }) => {
 
   return (
     <div className={`container ${show ? "show" : ""}`}>
-      <div className="container-maps">
+      <div className="container-maps-report">
         <div className="side-detail">
           <h4>Detail Kampus</h4>
           {selectedMarker ? (
@@ -58,7 +77,7 @@ const Report = ({ show }) => {
               <div className="container-img">
                 <img
                   className="size-img"
-                  src={selectedMarker.imageUrl}
+                  src={selectedMarker.link_gambar}
                   alt={selectedMarker.namaKampus}
                 />
               </div>
@@ -110,7 +129,7 @@ const Report = ({ show }) => {
                         <div className="img-popup">
                           <img
                             className="size-img-popup"
-                            src={item.imageUrl}
+                            src={item.link_gambar}
                             alt={item.namaKampus}
                           />
                         </div>
@@ -132,6 +151,16 @@ const Report = ({ show }) => {
                 ))}
             </MapContainer>
           </div>
+          <div className="pengesahan">
+            {Array.isArray(daaKepala) &&
+              daaKepala.map((items) => (
+                <>
+                  <h4>BaritoKuala</h4>
+                  <br />
+                  <p>{items.nama_panjang}</p>
+                </>
+              ))}
+          </div> 
           <div>
             <ReactToPrint
               trigger={() => (
@@ -144,7 +173,7 @@ const Report = ({ show }) => {
                   <Tooltip id="print-tooltip" />
                 </button>
               )}
-              content={() => document.getElementsByClassName("container-maps")[0]}
+              content={() => document.getElementsByClassName("container-maps-report")[0]}
             />
           </div>
         </div>
