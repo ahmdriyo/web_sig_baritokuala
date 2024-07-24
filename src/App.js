@@ -36,6 +36,9 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    document.title = "Web Pencarian Kampus di Batola";
+  }, []);
   return (
     <AuthProvider>
       <div className="container">
