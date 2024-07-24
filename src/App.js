@@ -37,7 +37,7 @@ function App() {
     };
   }, []);
   useEffect(() => {
-    document.title = "Web Pencarian Kampus di Batola";
+    document.title = "Web GIS Kampus Batola";
   }, []);
   return (
     <AuthProvider>
